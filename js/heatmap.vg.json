@@ -1,0 +1,21 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Interest exploded in 2026", "subtitle": "Average weekly Google search interest for 'sports cards' worldwide (100 = peak week)"},
+  "width": 700,
+  "height": 220,
+  "data": {"url": "data/trends_time.csv"},
+  "transform": [
+    {"calculate": "toDate(datum.Week)", "as": "date"},
+    {"calculate": "toNumber(datum.Interest)", "as": "Interest"}
+  ],
+  "mark": {"type": "rect", "stroke": "white", "strokeWidth": 1},
+  "encoding": {
+    "x": {"timeUnit": "month", "field": "date", "type": "ordinal", "title": null, "axis": {"format": "%b", "labelAngle": 0}},
+    "y": {"timeUnit": "year", "field": "date", "type": "ordinal", "title": null},
+    "color": {"aggregate": "mean", "field": "Interest", "type": "quantitative", "scale": {"scheme": "oranges"}, "legend": {"title": "Avg interest"}},
+    "tooltip": [
+      {"timeUnit": "yearmonth", "field": "date", "title": "Month"},
+      {"aggregate": "mean", "field": "Interest", "format": ".0f", "title": "Avg interest"}
+    ]
+  }
+}
