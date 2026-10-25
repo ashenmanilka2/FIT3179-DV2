@@ -1,0 +1,133 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Australia caught the card craze with the rest of the world",
+    "subtitle": "Weekly Google search interest in 'sports cards' (100 = peak week in each region)"
+  },
+  "width": 640,
+  "height": 300,
+  "data": {
+    "url": "data/trends_time_au.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Week": "string"
+      }
+    }
+  },
+  "transform": [
+    {
+      "lookup": "Week",
+      "from": {
+        "data": {
+          "url": "data/trends_time.csv",
+          "format": {
+            "type": "csv",
+            "parse": {
+              "Week": "string"
+            }
+          }
+        },
+        "key": "Week",
+        "fields": [
+          "Interest"
+        ]
+      },
+      "as": [
+        "WorldInterest"
+      ]
+    },
+    {
+      "calculate": "toDate(datum.Week)",
+      "as": "date"
+    },
+    {
+      "calculate": "toNumber(datum.Interest)",
+      "as": "Australia"
+    },
+    {
+      "calculate": "toNumber(datum.WorldInterest)",
+      "as": "Worldwide"
+    },
+    {
+      "fold": [
+        "Australia",
+        "Worldwide"
+      ],
+      "as": [
+        "Region",
+        "Value"
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "mean",
+          "field": "Value",
+          "as": "Smoothed"
+        }
+      ],
+      "frame": [
+        -3,
+        0
+      ],
+      "groupby": [
+        "Region"
+      ],
+      "sort": [
+        {
+          "field": "date"
+        }
+      ]
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": null
+    },
+    "y": {
+      "field": "Smoothed",
+      "type": "quantitative",
+      "title": "Search interest (4-week average)"
+    },
+    "color": {
+      "field": "Region",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Australia",
+          "Worldwide"
+        ],
+        "range": [
+          "#e6550d",
+          "#636363"
+        ]
+      },
+      "legend": {
+        "orient": "top-left",
+        "title": null
+      }
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal",
+        "format": "%d %b %Y"
+      },
+      {
+        "field": "Region"
+      },
+      {
+        "field": "Smoothed",
+        "format": ".0f",
+        "title": "Interest (4-wk avg)"
+      }
+    ]
+  }
+}

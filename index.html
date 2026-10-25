@@ -29,8 +29,15 @@
   <p>Interest stayed flat from 2021 to 2024, then took off. The yearly average jumped from about 25 in 2024 to 76 in 2026, and searches peaked in June 2026.</p>
   <div id="heatmap" class="chart"></div>
 
+  <h2>Zoom into Australia</h2>
+  <p>Australia followed the global boom almost week for week. Interest stayed flat for four years, then jumped in late 2025 and peaked in mid-2026.</p>
+  <div id="auworld" class="chart"></div>
+
+  <p>South Australia leads the country, and smaller states like Tasmania and the NT search more than NSW and Victoria. These numbers are a share of each state's searches, so a big population doesn't automatically mean a high score.</p>
+  <div id="aumap" class="chart"></div>
+
   <footer>
-    <p><strong>Data sources:</strong> Google Trends, "sports cards" search interest, Oct 2021 to Oct 2026 (trends.google.com).</p>
+    <p><strong>Data sources:</strong> Google Trends, "sports cards" search interest, Oct 2021 to Oct 2026 (trends.google.com). Australian state boundaries: Australian Bureau of Statistics (via github.com/rowanhogan/australian-states).</p>
     <p><strong>Author:</strong> Ashen Manilka. <strong>Date:</strong> 25 October 2026. FIT3179 Data Visualisation 2, Monash University.</p>
     <p><strong>AI acknowledgement:</strong> I used Perplexity AI to help clean the data files and explain Vega-Lite syntax. I built, edited and checked all the visualisations myself.</p>
   </footer>
@@ -38,6 +45,8 @@
   <script>
     vegaEmbed('#map', 'js/map.vg.json', {actions: false});
     vegaEmbed('#heatmap', 'js/heatmap.vg.json', {actions: false});
+    vegaEmbed('#auworld', 'js/au_vs_world.vg.json', {actions: false});
+    vegaEmbed('#aumap', 'js/au_map.vg.json', {actions: false});
   </script>
 
 </body>

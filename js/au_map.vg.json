@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "South Australians search for cards the most", "subtitle": "Google search interest in 'sports cards' by state, Oct 2021 to Oct 2026 (100 = highest state)"},
+  "width": 600,
+  "height": 480,
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {"url": "data/au_states.topojson", "format": {"type": "topojson", "feature": "st"}},
+      "mark": {"type": "geoshape", "fill": "#f0f0f0", "stroke": "#999", "strokeWidth": 0.6}
+    },
+    {
+      "data": {"url": "data/trends_au_states.csv"},
+      "mark": {"type": "circle", "opacity": 0.8, "stroke": "white", "strokeWidth": 1},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "size": {"field": "Interest", "type": "quantitative", "scale": {"domain": [0, 100], "range": [0, 2500]}, "legend": {"title": "Search interest"}},
+        "color": {"value": "#e6550d"},
+        "tooltip": [
+          {"field": "State", "type": "nominal"},
+          {"field": "Capital", "type": "nominal", "title": "Plotted at"},
+          {"field": "Interest", "type": "quantitative"}
+        ]
+      }
+    },
+    {
+      "data": {"url": "data/trends_au_states.csv"},
+      "mark": {"type": "text", "dy": -28, "fontSize": 12, "fontWeight": "bold"},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "Abbr"}
+      }
+    }
+  ]
+}
