@@ -1,18 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Australia's Shoebox Goldmine</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; color: #222; line-height: 1.5; }
+    h1 { font-size: 32px; margin-bottom: 4px; }
+    h2 { font-size: 22px; margin-top: 40px; border-bottom: 2px solid #e6550d; padding-bottom: 4px; }
+    .byline { color: #666; font-size: 14px; }
+    .chart { margin: 20px 0; }
+    footer { margin-top: 60px; font-size: 13px; color: #666; border-top: 1px solid #ccc; padding-top: 10px; }
+  </style>
 </head>
 <body>
+
   <h1>Australia's Shoebox Goldmine</h1>
-  <p>By Ashen Manilka, October 2026</p>
-  <div id="map"></div>
+  <p class="byline">How sports trading cards became a global market, and where Australia sits in it.<br>
+  By Ashen Manilka, 25 October 2026</p>
+
+  <h2>Where in the world?</h2>
+  <p>Americans search for sports cards more than almost anyone. Australia scores 20 out of 100, behind Canada, the UK and New Zealand. A score of 100 doesn't mean the most searches. It means the highest share of all Google searches in that country.</p>
+  <div id="map" class="chart"></div>
+
+  <p>Interest stayed flat from 2021 to 2024, then took off. The yearly average jumped from about 25 in 2024 to 76 in 2026, and searches peaked in June 2026.</p>
+  <div id="heatmap" class="chart"></div>
+
+  <footer>
+    <p><strong>Data sources:</strong> Google Trends, "sports cards" search interest, Oct 2021 to Oct 2026 (trends.google.com).</p>
+    <p><strong>Author:</strong> Ashen Manilka. <strong>Date:</strong> 25 October 2026. FIT3179 Data Visualisation 2, Monash University.</p>
+    <p><strong>AI acknowledgement:</strong> I used Perplexity AI to help clean the data files and explain Vega-Lite syntax. I built, edited and checked all the visualisations myself.</p>
+  </footer>
+
   <script>
-    vegaEmbed('#map', 'js/map.vg.json');
+    vegaEmbed('#map', 'js/map.vg.json', {actions: false});
+    vegaEmbed('#heatmap', 'js/heatmap.vg.json', {actions: false});
   </script>
+
 </body>
 </html>
