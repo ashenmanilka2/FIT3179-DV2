@@ -10,9 +10,13 @@
   <style>
     body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; color: #222; line-height: 1.5; }
     h1 { font-size: 32px; margin-bottom: 4px; }
-    h2 { font-size: 22px; margin-top: 40px; border-bottom: 2px solid #e6550d; padding-bottom: 4px; }
+    h2 { font-size: 22px; margin-top: 48px; border-bottom: 2px solid #e6550d; padding-bottom: 4px; }
     .byline { color: #666; font-size: 14px; }
-    .chart { margin: 20px 0; }
+    .chart { margin: 20px 0; overflow-x: auto; }
+    .stats { display: flex; gap: 16px; margin: 24px 0; }
+    .stat { flex: 1; background: #fff3e8; border-left: 4px solid #e6550d; padding: 12px; }
+    .stat b { display: block; font-size: 24px; color: #e6550d; }
+    .note { background: #f5f5f5; padding: 10px 14px; font-size: 14px; }
     footer { margin-top: 60px; font-size: 13px; color: #666; border-top: 1px solid #ccc; padding-top: 10px; }
   </style>
 </head>
@@ -22,8 +26,16 @@
   <p class="byline">How sports trading cards became a global market, and where Australia sits in it.<br>
   By Ashen Manilka, 25 October 2026</p>
 
+  <div class="stats">
+    <div class="stat"><b>2.3x</b>rise in Australian card searches from 2022 to 2026</div>
+    <div class="stat"><b>US$12.9m</b>paid for the most expensive card ever, in 2025</div>
+    <div class="stat"><b>9 of 9</b>Aussie grading dealers we found send cards to the US</div>
+  </div>
+
+  <p class="note">How to read the search charts: Google Trends doesn't count searches. It scores each place or week from 0 to 100, where 100 is the highest share of all Google searches that were about "sports cards". A small state can score higher than a big one.</p>
+
   <h2>Where in the world?</h2>
-  <p>Americans search for sports cards more than almost anyone. Australia scores 20 out of 100, behind Canada, the UK and New Zealand. A score of 100 doesn't mean the most searches. It means the highest share of all Google searches in that country.</p>
+  <p>Americans search for sports cards more than almost anyone. Australia scores 20 out of 100, behind Canada, the UK and New Zealand.</p>
   <div id="map" class="chart"></div>
 
   <p>Interest stayed flat from 2021 to 2024, then took off. The yearly average jumped from about 25 in 2024 to 76 in 2026, and searches peaked in June 2026.</p>
@@ -33,20 +45,53 @@
   <p>Australia followed the global boom almost week for week. Interest stayed flat for four years, then jumped in late 2025 and peaked in mid-2026.</p>
   <div id="auworld" class="chart"></div>
 
-  <p>South Australia leads the country, and smaller states like Tasmania and the NT search more than NSW and Victoria. These numbers are a share of each state's searches, so a big population doesn't automatically mean a high score.</p>
+  <p>Splitting each year into its own panel shows the same story. 2021 to 2024 look almost identical, 2025 climbs at the end, and 2026 sits far higher than every year before it.</p>
+  <div id="smallmult" class="chart"></div>
+
+  <p>Australians search most in winter (June to August) and again in December, when cards become Christmas presents.</p>
+  <div id="radial" class="chart"></div>
+
+  <p>South Australia leads the country, and smaller states like Tasmania and the NT search more than NSW and Victoria.</p>
   <div id="aumap" class="chart"></div>
 
+  <p>To be worth serious money, a card has to be "graded". An expert checks its condition and seals it in a plastic case with a score out of 10. All 9 Australian grading dealers we found send cards to companies in the United States, and every one of them uses PSA in California.</p>
+  <div id="flowmap" class="chart"></div>
+
+  <h2>Grade decides the price</h2>
+  <p>At the top of the market, prices are huge. The 14 biggest publicly reported sales all topped US$2 million, and three passed US$10 million.</p>
+  <div id="lollipop" class="chart"></div>
+
+  <p>Age isn't everything. A Honus Wagner card printed over 110 years ago sold for US$7.3 million, but so did modern cards only a few years old, like Shohei Ohtani's 2026 card, which sold for US$11 million in the same year it was printed.</p>
+  <div id="dumbbell" class="chart"></div>
+
+  <p>Most record cards were graded by the same three US companies Australian dealers use: PSA, BGS and SGC.</p>
+  <div id="waffle" class="chart"></div>
+
+  <h2>The takeaway</h2>
+  <p>Sports cards went from a hobby to a global market in five years, and Australians joined in at the same time as everyone else. But every card worth real money still has to make a trip to America first. That old shoebox in the cupboard might be worth checking.</p>
+
   <footer>
-    <p><strong>Data sources:</strong> Google Trends, "sports cards" search interest, Oct 2021 to Oct 2026 (trends.google.com). Australian state boundaries: Australian Bureau of Statistics (via github.com/rowanhogan/australian-states).</p>
+    <p><strong>Data sources:</strong>
+      Google Trends, "sports cards" search interest worldwide and in Australia, Oct 2021 to Oct 2026 (trends.google.com).
+      Record sales: Bleacher Report, "The 10 Most Expensive Sports Cards of All Time", updated 27 July 2026 (bleacherreport.com/articles/25457884-10-most-expensive-sports-cards-all-time), and The Athletic, 24 August 2025 (nytimes.com/athletic/6571746).
+      Australian grading dealers: each dealer's public website (House of Cards N Co, CardRevive, Urban Empire Collectables, The Hobby Australia, PokeBox Australia, Mana Market, Roxbury's, Graded Cards Australia, Dom's Rips).
+      Australian state boundaries: Australian Bureau of Statistics (via github.com/rowanhogan/australian-states). World boundaries: Natural Earth (via world-atlas).</p>
     <p><strong>Author:</strong> Ashen Manilka. <strong>Date:</strong> 25 October 2026. FIT3179 Data Visualisation 2, Monash University.</p>
-    <p><strong>AI acknowledgement:</strong> I used Perplexity AI to help clean the data files and explain Vega-Lite syntax. I built, edited and checked all the visualisations myself.</p>
+    <p><strong>AI acknowledgement:</strong> I used Perplexity AI to help clean the data files, draft Vega-Lite specifications and explain the syntax. I reviewed, edited and checked all the visualisations and text myself.</p>
   </footer>
 
   <script>
-    vegaEmbed('#map', 'js/map.vg.json', {actions: false});
-    vegaEmbed('#heatmap', 'js/heatmap.vg.json', {actions: false});
-    vegaEmbed('#auworld', 'js/au_vs_world.vg.json', {actions: false});
-    vegaEmbed('#aumap', 'js/au_map.vg.json', {actions: false});
+    const opt = {actions: false};
+    vegaEmbed('#map', 'js/map.vg.json', opt);
+    vegaEmbed('#heatmap', 'js/heatmap.vg.json', opt);
+    vegaEmbed('#auworld', 'js/au_vs_world.vg.json', opt);
+    vegaEmbed('#smallmult', 'js/small_multiples.vg.json', opt);
+    vegaEmbed('#radial', 'js/radial.vg.json', opt);
+    vegaEmbed('#aumap', 'js/au_map.vg.json', opt);
+    vegaEmbed('#flowmap', 'js/flow_map.vg.json', opt);
+    vegaEmbed('#lollipop', 'js/lollipop.vg.json', opt);
+    vegaEmbed('#dumbbell', 'js/dumbbell.vg.json', opt);
+    vegaEmbed('#waffle', 'js/waffle.vg.json', opt);
   </script>
 
 </body>

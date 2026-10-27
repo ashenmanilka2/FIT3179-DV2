@@ -1,0 +1,228 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Every Aussie card crosses the Pacific to get graded",
+    "subtitle": "Routes from Australian grading dealers to the US grading companies they send cards to"
+  },
+  "width": 680,
+  "height": 380,
+  "projection": {
+    "type": "equalEarth",
+    "rotate": [
+      160,
+      0
+    ],
+    "center": [
+      0,
+      0
+    ],
+    "scale": 210,
+    "translate": [
+      340,
+      200
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "sphere": true
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#eef4f8"
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#dcdcdc",
+        "stroke": "white",
+        "strokeWidth": 0.4
+      }
+    },
+    {
+      "data": {
+        "url": "data/au_grading_routes.csv"
+      },
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1.5,
+        "opacity": 0.5
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "glon"
+        },
+        "latitude2": {
+          "field": "glat"
+        },
+        "color": {
+          "field": "Grader",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "PSA",
+              "BGS",
+              "SGC",
+              "CGC"
+            ],
+            "range": [
+              "#e6550d",
+              "#3182bd",
+              "#31a354",
+              "#756bb1"
+            ]
+          },
+          "legend": {
+            "title": "Grading company"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Dealer"
+          },
+          {
+            "field": "Suburb"
+          },
+          {
+            "field": "Grader"
+          },
+          {
+            "field": "GraderCity",
+            "title": "Grader location"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/au_grading_routes.csv"
+      },
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "count",
+              "as": "Dealers"
+            }
+          ],
+          "groupby": [
+            "Grader",
+            "GraderCity",
+            "glat",
+            "glon"
+          ]
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.9,
+        "stroke": "white"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "glon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "glat",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "Dealers",
+          "type": "quantitative",
+          "scale": {
+            "range": [
+              60,
+              900
+            ]
+          },
+          "legend": {
+            "title": "Aussie dealers using it",
+            "values": [
+              1,
+              4,
+              9
+            ]
+          }
+        },
+        "color": {
+          "field": "Grader",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {
+            "field": "Grader"
+          },
+          {
+            "field": "GraderCity",
+            "title": "Location"
+          },
+          {
+            "field": "Dealers",
+            "title": "Aussie dealers using it"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/au_grading_routes.csv"
+      },
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "count",
+              "as": "n"
+            }
+          ],
+          "groupby": [
+            "Grader",
+            "glat",
+            "glon"
+          ]
+        },
+        {
+          "calculate": "datum.Grader=='SGC' ? datum.glat-3 : datum.Grader=='CGC' ? datum.glat+3 : datum.glat",
+          "as": "llat"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dx": 14,
+        "align": "left",
+        "fontWeight": "bold",
+        "fontSize": 11
+      },
+      "encoding": {
+        "longitude": {
+          "field": "glon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "llat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Grader"
+        }
+      }
+    }
+  ]
+}

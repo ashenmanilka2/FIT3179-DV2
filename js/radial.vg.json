@@ -1,0 +1,35 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "When do Australians search for cards?", "subtitle": "Average Google search interest by month in Australia, 2021–2026. Longer slice = more searches"},
+  "width": 340,
+  "height": 340,
+  "data": {"url": "data/trends_time_au.csv", "format": {"type": "csv", "parse": {"Week": "string"}}},
+  "transform": [
+    {"calculate": "month(toDate(datum.Week))", "as": "mnum"},
+    {"calculate": "toNumber(datum.Interest)", "as": "Interest"},
+    {"aggregate": [{"op": "mean", "field": "Interest", "as": "Avg"}], "groupby": ["mnum"]},
+    {"calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.mnum]", "as": "Month"},
+    {"calculate": "datum.mnum * 2 * PI / 12", "as": "t0"},
+    {"calculate": "(datum.mnum + 1) * 2 * PI / 12", "as": "t1"},
+    {"calculate": "(datum.mnum + 0.5) * 2 * PI / 12", "as": "tmid"}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "arc", "innerRadius": 25, "stroke": "#fff", "strokeWidth": 2},
+      "encoding": {
+        "theta": {"field": "t0", "type": "quantitative", "scale": null},
+        "theta2": {"field": "t1"},
+        "radius": {"field": "Avg", "type": "quantitative", "scale": {"type": "linear", "domain": [0, 50], "range": [25, 150]}},
+        "color": {"field": "Avg", "type": "quantitative", "scale": {"scheme": "oranges", "domain": [25, 50]}, "legend": {"title": "Avg interest"}},
+        "tooltip": [{"field": "Month"}, {"field": "Avg", "format": ".0f", "title": "Avg interest"}]
+      }
+    },
+    {
+      "mark": {"type": "text", "radius": 165, "fontSize": 11},
+      "encoding": {
+        "theta": {"field": "tmid", "type": "quantitative", "scale": null},
+        "text": {"field": "Month"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "The most expensive sports cards ever sold", "subtitle": "Publicly reported sale prices in US dollars (millions)"},
+  "width": 560,
+  "height": 380,
+  "data": {"url": "data/record_sales.csv"},
+  "transform": [
+    {"calculate": "datum.Player + ' (' + year(toDate(datum.SaleDate)) + ')'", "as": "Label"},
+    {"calculate": "datum.PriceUSD / 1000000", "as": "Millions"}
+  ],
+  "encoding": {
+    "y": {"field": "Label", "type": "nominal", "sort": "-x", "title": null},
+    "x": {"field": "Millions", "type": "quantitative", "title": "Sale price (US$ millions)"}
+  },
+  "layer": [
+    {"mark": {"type": "rule", "color": "#bbb", "strokeWidth": 2}, "encoding": {"x": {"datum": 0}, "x2": {"field": "Millions"}}},
+    {
+      "mark": {"type": "circle", "size": 160, "opacity": 1},
+      "encoding": {
+        "color": {"field": "Sport", "type": "nominal", "scale": {"domain": ["Basketball", "Baseball", "Football"], "range": ["#e6550d", "#3182bd", "#31a354"]}, "legend": {"orient": "bottom-right"}},
+        "tooltip": [{"field": "Player"}, {"field": "Card"}, {"field": "Millions", "format": ".2f", "title": "Price (US$ m)"}, {"field": "Grader"}, {"field": "Grade"}]
+      }
+    },
+    {"mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 10}, "encoding": {"text": {"field": "Millions", "format": "$.1f"}}}
+  ]
+}

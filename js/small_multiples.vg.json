@@ -1,0 +1,21 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Year by year: Australia's card searches", "subtitle": "Weekly Google search interest in Australia, one panel per year (same scale)"},
+  "data": {"url": "data/trends_time_au.csv"},
+  "transform": [
+    {"calculate": "toDate(datum.Week)", "as": "date"},
+    {"calculate": "toNumber(datum.Interest)", "as": "Interest"},
+    {"calculate": "year(datum.date)", "as": "Year"},
+    {"calculate": "datetime(2000, month(datum.date), date(datum.date))", "as": "DayOfYear"}
+  ],
+  "facet": {"field": "Year", "type": "ordinal", "title": null, "header": {"labelFontSize": 13, "labelFontWeight": "bold"}},
+  "columns": 3,
+  "spec": {
+    "width": 230,
+    "height": 120,
+    "layer": [
+      {"mark": {"type": "area", "color": "#fdd0a2", "opacity": 0.7}, "encoding": {"x": {"field": "DayOfYear", "type": "temporal", "axis": {"format": "%b", "tickCount": 4}, "title": null}, "y": {"field": "Interest", "type": "quantitative", "scale": {"domain": [0, 100]}, "title": null}}},
+      {"mark": {"type": "line", "color": "#e6550d"}, "encoding": {"x": {"field": "DayOfYear", "type": "temporal"}, "y": {"field": "Interest", "type": "quantitative"}, "tooltip": [{"field": "date", "type": "temporal", "format": "%d %b %Y", "title": "Week"}, {"field": "Interest"}]}}
+    ]
+  }
+}

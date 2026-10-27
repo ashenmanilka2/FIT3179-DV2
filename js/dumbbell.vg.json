@@ -1,0 +1,21 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Old and new cards both hit the jackpot", "subtitle": "Each line runs from the year a card was printed to the year it sold"},
+  "width": 600,
+  "height": 380,
+  "data": {"url": "data/record_sales.csv"},
+  "transform": [
+    {"calculate": "year(toDate(datum.SaleDate))", "as": "SaleYear"},
+    {"calculate": "datum.SaleYear - datum.CardYear", "as": "Age"},
+    {"calculate": "datum.Player + ' ($' + format(datum.PriceUSD/1000000, '.1f') + 'm)'", "as": "Label"}
+  ],
+  "encoding": {
+    "y": {"field": "Label", "type": "nominal", "sort": {"field": "CardYear"}, "title": null}
+  },
+  "layer": [
+    {"mark": {"type": "rule", "strokeWidth": 2, "color": "#bbb"}, "encoding": {"x": {"field": "CardYear", "type": "quantitative", "scale": {"domain": [1900, 2030]}, "axis": {"format": "d"}, "title": "Year"}, "x2": {"field": "SaleYear"}}},
+    {"mark": {"type": "circle", "size": 90, "color": "#3182bd"}, "encoding": {"x": {"field": "CardYear", "type": "quantitative"}, "tooltip": [{"field": "Card"}, {"field": "CardYear", "title": "Printed"}]}},
+    {"mark": {"type": "circle", "size": 90, "color": "#e6550d"}, "encoding": {"x": {"field": "SaleYear", "type": "quantitative"}, "tooltip": [{"field": "Player"}, {"field": "SaleYear", "title": "Sold"}, {"field": "Age", "title": "Card age when sold (years)"}]}},
+    {"data": {"values": [{"x": 1930, "y": "Babe Ruth ($7.2m)", "t": "Blue = printed, orange = sold"}]}, "mark": {"type": "text", "align": "left", "dy": -14, "fontStyle": "italic", "color": "#555"}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y"}, "text": {"field": "t"}}}
+  ]
+}
